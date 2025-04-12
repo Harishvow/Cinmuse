@@ -1,8 +1,8 @@
-import streamlit as st
+import streamlit as ln
 import requests
 
-st.set_page_config(page_title="Cinemuse 🎬", layout="centered")
-st.markdown("""
+ln.set_page_config(page_title="Cinemuse 🎬", layout="centered")
+ln.markdown("""
     <style>
     .stApp {
         background: linear-gradient(135deg, #1b1b2f, #162447, #1f4068);
@@ -19,7 +19,7 @@ st.markdown("""
     }
     </style>
 """, unsafe_allow_html=True)
-st.title("🎬 Cinemuse")
+ln.title("🎬 Cinemuse")
 API_KEY = "e18784041d39dc57252ad007f1e02d4d"
 mood_genre_map = {
     "happy": [35, 10751],
@@ -29,6 +29,7 @@ mood_genre_map = {
     "angry": [27, 53],
     "relaxed": [10751, 16]
 }
+
 def get_movies_by_mood_or_genre(selected_option, selection):
     if selected_option == "Mood":
         genres = mood_genre_map.get(selection.lower(), [])
@@ -46,23 +47,25 @@ def get_movies_by_mood_or_genre(selected_option, selection):
         res = requests.get(url).json()
         movies.extend(res.get("results", [])[:5])
     return movies
-rec_type = st.radio("Choose Recommendation Type", ["Mood", "Genre"])
+
+rec_type = ln.radio("Choose Recommendation Type", ["Mood", "Genre"])
 if rec_type == "Mood":
-    mood = st.selectbox("How are you feeling?", ["happy", "sad", "romance", "motivated", "angry", "relaxed"])
+    mood = ln.selectbox("How are you feeling?", ["happy", "sad", "romance", "motivated", "angry", "relaxed"])
 else:
-    genre = st.selectbox("Pick a Genre", ["Action", "Comedy", "Drama", "Fantasy", "Horror", "Romance",
+    genre = ln.selectbox("Pick a Genre", ["Action", "Comedy", "Drama", "Fantasy", "Horror", "Romance",
                                           "Adventure", "Family", "Animation", "Thriller"])
 
-if st.button("🎥 Recommend Movies"):
+if ln.button("🎥 Recommend Movies"):
     recs = get_movies_by_mood_or_genre("Mood", mood) if rec_type == "Mood" else get_movies_by_mood_or_genre("Genre", genre)
 
     if recs:
         for movie in recs:
-            st.subheader(f"{movie['title']} ({movie['release_date']})")
+            ln.subheader(f"{movie['title']} ({movie['release_date']})")
             if movie.get("poster_path"):
-                st.image(f"https://image.tmdb.org/t/p/w200/{movie['poster_path']}", width=120)
+                ln.image(f"https://image.tmdb.org/t/p/w200/{movie['poster_path']}", width=120)
     else:
-        st.warning("No movies found. Try another mood or genre.")
+        ln.warning("No movies found. Try another mood or genre.")
+
 
 
 
