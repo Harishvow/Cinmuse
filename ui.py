@@ -20,7 +20,6 @@ ln.markdown("""
     </style>
 """, unsafe_allow_html=True)
 ln.title("🎬 Cinemuse")
-API_KEY = "e18784041d39dc57252ad007f1e02d4d"
 mood_genre_map = {
     "happy": [35, 10751],
     "sad": [18, 10749],
